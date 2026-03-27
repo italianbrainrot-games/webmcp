@@ -15,7 +15,16 @@ const queryParams = ref<Record<string, any>>({})
 
 // 动态生成遥控器 URL
 const remoteUrl = computed(() => {
-  return `http://${window.location.hostname}:3002/remote.html?sessionId=${sessionId}&t=${Date.now()}`
+  // 判断是否为开发环境
+  const isDev = import.meta.env.DEV;
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  
+  // 开发环境下使用 3002 端口（指向本地 Node 服务）
+  // 生产环境下（如 Render），直接使用当前域名和端口
+  const port = isDev ? ':3002' : (window.location.port ? `:${window.location.port}` : '');
+  
+  return `${protocol}//${hostname}${port}/remote.html?sessionId=${sessionId}&t=${Date.now()}`
 })
 
 // 使用免费 API 生成二维码
