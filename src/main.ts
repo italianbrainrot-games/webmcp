@@ -1,4 +1,7 @@
-import '@mcp-b/webmcp-polyfill' // 引入 WebMCP Polyfill，提供 navigator.modelContext
+import { initWebMCPClient } from './webmcp-client'
+// 初始化本地 WebMCP 客户端，接管 navigator.modelContext
+initWebMCPClient()
+
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'

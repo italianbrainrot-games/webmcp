@@ -58,7 +58,7 @@ const resetSearch = () => {
 const fetchAudits = async () => {
   loading.value = true
   try {
-    const res = await fetch('http://localhost:3000/api/audits')
+    const res = await fetch('/api/audits')
     const json = await res.json()
     if (json.success) {
       auditList.value = json.data
@@ -85,7 +85,7 @@ const handleApprove = async (row: Audit) => {
       type: 'warning',
     })
     
-    const res = await fetch(`http://localhost:3000/api/audits/${row.id}/approve`, {
+    const res = await fetch(`/api/audits/${row.id}/approve`, {
       method: 'POST'
     })
     const json = await res.json()
@@ -116,7 +116,7 @@ const handleReject = async (row: Audit) => {
       type: 'error',
     })
     
-    const res = await fetch(`http://localhost:3000/api/audits/${row.id}/reject`, {
+    const res = await fetch(`/api/audits/${row.id}/reject`, {
       method: 'POST'
     })
     const json = await res.json()

@@ -225,6 +225,13 @@ app.post('/api/audits/:id/reject', (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Backend server running at http://localhost:${port}`);
-});
+// 判断是否为主模块运行
+const isMainModule = process.argv[1] === __filename;
+
+if (isMainModule) {
+  app.listen(port, () => {
+    console.log(`Backend server running at http://localhost:${port}`);
+  });
+}
+
+export default app;

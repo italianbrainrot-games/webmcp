@@ -72,7 +72,7 @@ export function useGlobalWebMCP(
         },
         execute: async () => {
           try {
-            const res = await fetch('http://localhost:3000/api/users')
+            const res = await fetch('/api/users')
             const json = await res.json()
             if (json.success) {
               return {
@@ -110,7 +110,7 @@ export function useGlobalWebMCP(
         execute: async (args) => {
           const { id, name, phone, address } = args as any
           try {
-            const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+            const res = await fetch(`/api/users/${id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ name, phone, address })
@@ -197,7 +197,7 @@ export function useGlobalWebMCP(
           const { id, reason } = args as any
           
           try {
-            const listRes = await fetch('http://localhost:3000/api/orders')
+            const listRes = await fetch('/api/orders')
             const listJson = await listRes.json()
             if (!listJson.success) {
               return { content: [{ type: 'text', text: JSON.stringify({ success: false, message: '获取订单列表失败' }) }] }
@@ -210,7 +210,7 @@ export function useGlobalWebMCP(
               return { content: [{ type: 'text', text: JSON.stringify({ success: false, message: `提现单 ${id} 的状态为"${order.status}"，只有"提现失败"的订单才能补单` }) }] }
             }
             
-            const res = await fetch(`http://localhost:3000/api/orders/${id}/reorder`, {
+            const res = await fetch(`/api/orders/${id}/reorder`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ reason })
@@ -356,7 +356,7 @@ export function useGlobalWebMCP(
           const { userId } = args as any
           try {
             const amount = Math.floor(Math.random() * 900) + 100
-            const res = await fetch('http://localhost:3000/api/orders', {
+            const res = await fetch('/api/orders', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ userId, amount })

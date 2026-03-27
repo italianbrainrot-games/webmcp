@@ -18,7 +18,7 @@ const userList = ref<User[]>([])
 // 获取用户列表
 const fetchUsers = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/users')
+    const res = await fetch('/api/users')
     const json = await res.json()
     if (json.success) {
       userList.value = json.data
@@ -60,7 +60,7 @@ const handleSave = async () => {
   }
   
   try {
-    const res = await fetch(`http://localhost:3000/api/users/${editingUser.value.id}`, {
+    const res = await fetch(`/api/users/${editingUser.value.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -94,7 +94,7 @@ const handleSave = async () => {
 const handleCreateWithdrawal = async (row: User) => {
   try {
     const amount = Math.floor(Math.random() * 900) + 100 // 随机生成 100-1000 的金额
-    const res = await fetch('http://localhost:3000/api/orders', {
+    const res = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

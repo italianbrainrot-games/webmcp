@@ -5,11 +5,23 @@ import UserManagement from './components/UserManagement.vue'
 import WithdrawalManagement from './components/WithdrawalManagement.vue'
 import AuditManagement from './components/AuditManagement.vue'
 import { useGlobalWebMCP } from './composables/useGlobalWebMCP'
+import { sessionId } from './webmcp-client'
+import { computed } from 'vue'
 
 // 侧边栏当前选中的菜单
 const activeMenu = ref('users')
 // 跨组件传递的查询参数
 const queryParams = ref<Record<string, any>>({})
+
+// 动态生成遥控器 URL
+const remoteUrl = computed(() => {
+  return `http://${window.location.hostname}:3002/remote.html?sessionId=${sessionId}&t=${Date.now()}`
+})
+
+// 使用免费 API 生成二维码
+const qrCodeUrl = computed(() => {
+  return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(remoteUrl.value)}`
+})
 
 /**
  * 处理导航事件
@@ -71,6 +83,16 @@ useGlobalWebMCP(activeMenu, handleNavigate)
         </el-card>
       </el-main>
     </el-container>
+
+    <!-- 悬浮的扫码遥控区 -->
+    <div class="remote-control-panel">
+      <div class="panel-title">📱 手机扫码遥控</div>
+      <img :src="qrCodeUrl" alt="QR Code" class="qr-code" />
+      <div class="session-info">
+        Session: <span>{{ sessionId }}</span>
+      </div>
+      <div class="tip">使用手机扫码，体验“一句话操作网页”</div>
+    </div>
   </el-container>
 </template>
 
@@ -96,6 +118,50 @@ useGlobalWebMCP(activeMenu, handleNavigate)
   font-weight: bold;
   color: #409EFF;
   border-bottom: 1px solid #e6e6e6;
+}
+
+.remote-control-panel {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e6e6e6;
+  text-align: center;
+  width: 180px;
+  z-index: 1000;
+}
+
+.panel-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.qr-code {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.session-info {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.session-info span {
+  color: #409EFF;
+  font-weight: bold;
+}
+
+.tip {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #999;
+  line-height: 1.4;
 }
 
 .el-menu-vertical {

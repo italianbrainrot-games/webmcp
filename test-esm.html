@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="module">
+  async function run() {
+    try {
+      const { Client } = await import("https://esm.sh/@modelcontextprotocol/sdk/client/index.js");
+      const { SSEClientTransport } = await import("https://esm.sh/@modelcontextprotocol/sdk/client/sse.js");
+      console.log("Client loaded:", !!Client);
+      console.log("SSE loaded:", !!SSEClientTransport);
+      document.body.innerHTML = "Success";
+    } catch(e) {
+      console.error(e);
+      document.body.innerHTML = e.message;
+    }
+  }
+  run();
+</script>
+</head>
+<body>Loading...</body>
+</html>

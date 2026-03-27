@@ -63,7 +63,7 @@ const resetSearch = () => {
  */
 const fetchOrders = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/orders')
+    const res = await fetch('/api/orders')
     const json = await res.json()
     if (json.success) {
       orderList.value = json.data
@@ -97,7 +97,7 @@ const submitReorder = async () => {
   }
   
   try {
-    const res = await fetch(`http://localhost:3000/api/orders/${reorderForm.value.orderId}/reorder`, {
+    const res = await fetch(`/api/orders/${reorderForm.value.orderId}/reorder`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
